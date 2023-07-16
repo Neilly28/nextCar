@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import CustomButton from "./CustomButton";
 import { calculateCarRent } from "@/utils";
+import CarDetails from "./CarDetails";
 
 interface CarCardProps {
   car: CarProps;
@@ -13,14 +14,14 @@ interface CarCardProps {
 const CarCard = ({ car }: CarCardProps) => {
   const { city_mpg, drive, make, model, transmission, year } = car;
 
-  const carRent = calculateCarRent(city_mpg, year);
-
   const [isOpen, setIsOpen] = useState(false);
+
+  const carRent = calculateCarRent(city_mpg, year);
 
   return (
     <div className="car-card group">
       <div className="car-card__content">
-        <h2>
+        <h2 className="car-card__content-title">
           {make} {model}
         </h2>
       </div>
@@ -33,7 +34,7 @@ const CarCard = ({ car }: CarCardProps) => {
 
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
-          src="/hero.png"
+          src={"/hero.png"}
           alt="Car Model"
           fill
           priority
@@ -74,6 +75,11 @@ const CarCard = ({ car }: CarCardProps) => {
           />
         </div>
       </div>
+      <CarDetails
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 };
